@@ -3,6 +3,7 @@ package test.data.interactive;
 
 import java.io.InputStream;
 import java.util.Iterator;
+
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -61,7 +62,7 @@ public class ResolveXml {
 		long curTime=System.currentTimeMillis();
 		String resultString=this.getLocator(locator);
 		long dalta=System.currentTimeMillis()-curTime;
-		System.out.println("\n"+locator+"="+resultString+"'\nTime used(ms)::"+dalta);
+		System.out.println("\n"+locator+"= '"+resultString+"'\nTime used(ms)::"+dalta);
 		}
 	}
 
