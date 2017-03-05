@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<datasets name="ds1">
+	<locators name="loginseMet">
+		<locator name="loginlocator" by="id">login</locator>
+		<locator name="pwdlocator" by="name">t1_password</locator>
+		<locator name="submitlacator" by="xpath">//input[@name='lgoin_submit']</locator>	
+	</locators>
+</datasets>
