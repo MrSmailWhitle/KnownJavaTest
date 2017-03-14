@@ -2,14 +2,16 @@ package test.data.interactive;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.poi.sl.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 
 public class ResolveExcel {
-	private Sheet sheet;
-	private List<String> datalist=new ArrayList<>();
+	private Sheet sheet;//sheet用来保存构造函数获取的对象
+	//sheet类是poi的对象模型；
+	private List<String[]> datalist=new ArrayList<>();
+	//datalist用来保存从excel 获取的内容；
 	public ResolveExcel(Sheet sheet){
 		this.sheet=sheet;
 		setSheetDataSet();
@@ -18,16 +20,16 @@ public class ResolveExcel {
 		String cellText="";
 		Cell cell=row.getCell(column,Row.CREATE_NULL_AS_BLANK);
 		switch(cell.getCellType()){
-		case cell.CELL_TYPE_STRING:
+		case Cell.CELL_TYPE_STRING:
 			cellText=cell.getStringCellValue().trim();
 			break;
-		case cell.CELL_TYPE_BLANK:
+		case Cell.CELL_TYPE_BLANK:
 			cellText="";
 			break;
-		case cell.CELL_TYPE_BOOLEAN:
+		case Cell.CELL_TYPE_BOOLEAN:
 			cellText=Boolean.toString(cell.getBooleanCellValue());
 			break;
-		case cell.CELL_TYPE_NUMERIC:
+		case Cell.CELL_TYPE_NUMERIC:
 			if(DateUtil.isCellDateFormatted(cell)){
 				cellText=String.valueOf(cell.getBooleanCellValue());
 				
@@ -41,10 +43,10 @@ public class ResolveExcel {
 					}
 			}
 			break;
-		case cell.CELL_TYPE_ERROR:
+		case Cell.CELL_TYPE_ERROR:
 			cellText="";
 			break;
-		case cell.CELL_TYPE_FORMULA:
+		case Cell.CELL_TYPE_FORMULA:
 			cell.setCellType(cell.CELL_TYPE_STRING);
 			cellText=cell.getStringCellValue();
 			if(cellText!=null){
@@ -66,24 +68,25 @@ public class ResolveExcel {
 		}
 		if(columnNum>0){
 			for(Row row:sheet){
-				String[] singleRow=new String[columNum];
+				String[] singleRow=new String[columnNum];
 				int n=0;
 				for(int i=0;i<columnNum;i++){
 					singleRow[n]=this.getCellText(row,i);
 					n++;
 				}
 				
+				if("".equals(singleRow[0])){
+					continue;
+				}
+				datalist.add(singleRow);
 			}
+			
 		}
-		if("".equals(singleRow[0])){
-			continue;
-		}
-		datalist.add(singleRow);
+	
 			
 		}
 		
-	}
- }
+
  public List<String[]> getSheetDataSet(){
 	 return datalist;
  }
